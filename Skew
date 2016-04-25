@@ -1,0 +1,74 @@
+'''
+Created on 13/feb/2016
+
+@author: Matteo
+'''
+
+# Input:  A DNA string Genome
+# Output: A list containing all integers i minimizing Skew(Prefix_i(Text)) over all values of i (from 0 to |Genome|)
+def MinimumSkew(Genome):
+    positions = [] # output variable
+    position = []
+    # your code here
+    #positions = min(Skew(Genome), key=Skew(Genome).get)
+    
+    #position = Skew(Genome).values()
+    for v in Skew(Genome).values():
+        position.append(v)
+    #print(position)
+    #position.pop(0)
+    
+    position = min(position)
+    #print(position)
+    l = Skew(Genome).__len__()
+    #print(l)
+    for i in range (1,l):
+        if Skew(Genome)[i] == position:
+            positions.append(i)
+#     for k in Skew(Genome).keys():
+#         if Skew(Genome)[k] == position:
+#             positions.append(str(k))
+    #positions = min(positions)
+    
+    
+    return positions
+
+# Input:  A String Genome
+# Output: Skew(Genome)
+
+Genome = "AGAACGTAAGTTAAGGGAGTCGCGGGGG"
+def Skew(Genome):
+    skew = {} #initializing the dictionary
+    # your code here
+    n = len(Genome)
+    #print(n)
+    skew[0] = 0
+    countC = 0
+    countG = 0
+    for i in range(0, n):
+        #print(i)
+        #skew[i] = skew[i-1]
+        
+        if Genome[i] == "C":
+            #print(Genome[i])
+            countC = countC+1
+            #print("countC = " + str(countC))
+            #print("countG = " + str(countG))
+            #print(countG-countC)
+            skew[i+1] = countG-countC
+#             
+        if Genome[i] == "G":
+            #print(Genome[i])
+            countG = countG+1
+            skew[i+1] = countG-countC
+        else:
+            skew[i+1] = countG-countC
+            
+    
+    return skew
+
+x = Skew(Genome)
+print(x)
+
+y = MinimumSkew(Genome)
+print(y)
